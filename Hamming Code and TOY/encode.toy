@@ -1,0 +1,30 @@
+loc value pseudocode
+--------------------------------------------
+10: 7E01  R[E] <- 0001
+11: 8AFF  read R[A]
+12: 1FEA  R[F] <- R[E] + R[A]
+13: CF25  if F==0, goto 25 (FFFF + 0001 = 0000)
+14: 8BFF  read R[B]
+15: 8CFF  read R[C]
+16: 8DFF  read R[D]
+
+//compute parity bits
+17: 41AB  R[1] <- A^B
+18: 411D  R[1] <- R[1]^D
+
+19: 42AC  R[2] <- A^C
+1A: 422D  R[2] <- R[2]^D
+
+1B: 43BC  R[3] <- B^C
+1C: 433D  R[3] <- R[3]^D
+
+1D: 9AFF  write R[A]
+1E: 9BFF  write R[B]
+1F: 9CFF  write R[C]
+20: 9DFF  write R[D]
+21: 91FF  write R[1]
+22: 92FF  write R[2]
+23: 93FF  write R[3]
+24: C011  goto 11
+
+25: 0000  halt

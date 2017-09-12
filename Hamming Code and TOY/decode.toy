@@ -1,0 +1,65 @@
+loc value pseudocode
+--------------------------------------------
+10: 7901  R[9] <- 0001
+11: 8AFF  read R[A]
+12: 189A  R[8] <- R[9] + R[A]
+13: C842  if R[8]==0, goto 42 (FFFF + 0001 = 0000)
+14: 8BFF  read R[B]
+15: 8CFF  read R[C]
+16: 8DFF  read R[D]
+17: 81FF  read R[1]
+18: 82FF  read R[2]
+19: 83FF  read R[3]
+
+//check parity bits
+1A: 411A  R[1] <- R[1] ^ R[A]
+1B: 411B  R[1] <- R[1] ^ R[B]
+1C: 411D  R[1] <- R[1] ^ R[D]
+
+1D: 422A  R[2] <- R[2] ^ R[A]
+1E: 422C  R[2] <- R[2] ^ R[C]
+1F: 422D  R[2] <- R[2] ^ R[D]
+
+20: 433B  R[3] <- R[3] ^ R[B]
+21: 433C  R[3] <- R[3] ^ R[C]
+22: 433D  R[3] <- R[3] ^ R[D]
+
+23: 7E03  R[E] <- 03
+24: 7F02  R[F] <- 02
+
+//flip bits if necessary
+25: 1412  R[4] <- R[1] + R[2]
+26: 1443  R[4] <- R[4] + R[3]
+27: 244E  R[4] <- R[4] - R[E]
+28: C42A  if(R[4] == 0) goto 2A
+29: C02C  goto 2C
+2A: 4D9D  R[D] <- R[9] ^ R[D]
+2B: C03D  goto 3D
+
+2C: 1512  R[5] <- R[1] + R[2]
+2D: 255F  R[5] <- R[5] - R[F]
+2E: C530  if(R[5] == 0) goto 30
+2F: C032  goto 32
+30: 4A9A  R[A] <- R[9] ^ R[A]
+31: C03D  goto 3D
+
+32: 1613  R[6] <- R[1] + R[3]
+33: 266F  R[6] <- R[6] - R[F]
+34: C636  if(R[6] == 0) goto 36 
+35: C038  goto 38
+36: 4B9B  R[B] <- R[9] ^ R[B]
+37: C03D  goto 3D
+
+38: 1723  R[7] <- R[2] + R[3]
+39: 277F  R[7] <- R[7] - R[F]
+3A: C73C  if(R[7] == 0) goto 3C  
+3B: C03D  goto 3D 
+3C: 4C9C  R[C] <- R[9] ^ R[C]
+
+3D: 9AFF
+3E: 9BFF
+3F: 9CFF
+40: 9DFF
+
+41: C011  goto 11
+42: 0000 halt 
